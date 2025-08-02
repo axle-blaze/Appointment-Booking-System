@@ -360,36 +360,6 @@ CMD ["npm", "run", "start:prod"]
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**GitHub Copilot**
-- Repository: [@axle-blaze/Appointment-Booking-System](https://github.com/axle-blaze/Appointment-Booking-System)
-
-## 🆘 Support
-
-If you encounter any problems or have questions, please open an issue on the [GitHub repository](https://github.com/axle-blaze/Appointment-Booking-System/issues).
-
-## 🔮 Future Enhancements
-
-- [ ] Email notifications for appointments
-- [ ] SMS reminders
-- [ ] Payment integration
-- [ ] Real-time chat between doctors and patients
-- [ ] Mobile app development
-- [ ] Advanced reporting and analytics
-- [ ] Multi-language support
-- [ ] Calendar integration
-- [ ] Video consultation feature
-
----
-
-**Happy Coding! 🎉**
-- `startTime`, `endTime` (Time)
-- `appointmentDuration` (Number)
 
 ### Appointments Table
 - `id` (UUID, Primary Key)
