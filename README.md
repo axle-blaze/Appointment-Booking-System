@@ -1,225 +1,321 @@
 # Doctor Appointment Booking System
 
-A production-grade backend system built with NestJS for managing doctor appointments, featuring authentication, authorization, and comprehensive API documentation.
+A production-ready **Doctor Appointment Booking System** built with **NestJS**, **TypeScript**, and **PostgreSQL**. This system provides a comprehensive platform for managing doctor appointments with role-based authentication, RESTful APIs, and real-time appointment management.
+
+[![NestJS](https://img.shields.io/badge/NestJS-v10.0.0-red.svg)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-v5.1.3-blue.svg)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue.svg)](https://www.postgresql.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🚀 Features
 
-- **Authentication & Authorization**: JWT-based auth with role-based access control (RBAC)
-- **Doctor Management**: CRUD operations for doctors with specialization filtering
-- **Appointment Booking**: Comprehensive appointment system with conflict detection
-- **User Management**: Patient and admin user management
-- **API Documentation**: Auto-generated Swagger documentation
-- **Production Ready**: Rate limiting, logging, validation, error handling
-- **Database**: PostgreSQL with TypeORM
-- **Security**: Helmet, CORS, input validation, password hashing
+### 👥 User Management
+- **User Registration & Authentication** with JWT tokens
+- **Role-based Access Control** (Admin, Patient)
+- **User Profile Management** with update capabilities
+- **Secure Password Hashing** using bcryptjs
 
-## 🛠️ Tech Stack
+### 👨‍⚕️ Doctor Management
+- **Doctor Registration** (Admin only)
+- **Doctor Profile Management** with specializations
+- **Availability Management** with time slots
+- **Experience & Qualification Tracking**
+- **Consultation Fee Management**
 
-- **Framework**: NestJS (TypeScript)
-- **Database**: PostgreSQL with TypeORM
-- **Authentication**: Passport.js with JWT
-- **Validation**: class-validator & class-transformer
-- **Documentation**: Swagger/OpenAPI
-- **Security**: Helmet, Rate limiting
-- **Logging**: Winston
+### 📅 Appointment System
+- **Book Appointments** with available doctors
+- **Appointment Status Management** (Scheduled, Confirmed, Cancelled, Completed)
+- **Real-time Availability Checking**
+- **Appointment History** for patients and doctors
+- **Automatic Conflict Prevention**
+
+### 🔐 Security Features
+- **JWT Authentication** with role-based authorization
+- **Password Encryption** with bcryptjs
+- **Request Rate Limiting** with Throttler
+- **Input Validation** with class-validator
+- **Security Headers** with Helmet
+- **CORS Protection**
+
+### 📚 API Documentation
+- **Swagger/OpenAPI** interactive documentation
+- **Auto-generated API specs**
+- **Request/Response examples**
+- **Authentication testing interface**
+
+## 🛠️ Technology Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Backend Framework** | NestJS v10.0.0 |
+| **Language** | TypeScript v5.1.3 |
+| **Database** | PostgreSQL |
+| **ORM** | TypeORM v0.3.17 |
+| **Authentication** | JWT, Passport.js |
+| **Validation** | class-validator, class-transformer |
+| **Documentation** | Swagger/OpenAPI |
+| **Security** | Helmet, Throttler, bcryptjs |
+| **Logging** | Winston |
+| **Testing** | Jest, Supertest |
 
 ## 📋 Prerequisites
 
-- Node.js (v18+ recommended)
-- npm or yarn
-- *(Optional)* PostgreSQL (v13+ recommended) - for production use
+Before you begin, ensure you have the following installed:
 
-**Note**: SQLite is used by default for development - no additional database setup required!
+- **Node.js** (v18.0.0 or higher)
+- **npm** (v8.0.0 or higher)
+- **PostgreSQL** (v12.0 or higher)
+- **Git**
 
-## 🔧 Installation
+## � Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd doctor-appointment-system
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Environment Setup**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Update the `.env` file with your database credentials:
-   ```env
-   DATABASE_HOST=localhost
-   DATABASE_PORT=5432
-   DATABASE_USERNAME=postgres
-   DATABASE_PASSWORD=your_password
-   DATABASE_NAME=doctor_appointment
-   JWT_SECRET=your-super-secret-jwt-key
-   ```
-
-4. **Database Setup**
-   
-   Create the database:
-   ```sql
-   CREATE DATABASE doctor_appointment;
-   ```
-
-5. **Run migrations and seed data**
-   ```bash
-   npm run migration:run
-   npm run seed
-   ```
-
-## 🚦 Running the Application
-
-### Development
+### 1. Clone the Repository
 ```bash
-npm run start:dev
+git clone https://github.com/axle-blaze/Appointment-Booking-System.git
+cd Appointment-Booking-System
 ```
 
-### Production
+### 2. Install Dependencies
 ```bash
-npm run build
+npm install
+```
+
+### 3. Database Setup
+
+#### PostgreSQL Setup
+1. Install PostgreSQL and start the service
+2. Create a database:
+```sql
+CREATE DATABASE doctor_appointment;
+```
+
+#### Environment Configuration
+Create a `.env` file in the root directory:
+```env
+# Database Configuration
+DATABASE_TYPE=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=doctor_appointment
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key
+
+# Server Configuration
+PORT=3000
+NODE_ENV=development
+```
+### 4. Start the Application
+```bash
+# Development mode with hot reload
+npm run start:dev
+
+# Production mode
 npm run start:prod
 ```
 
-### Watch Mode (Auto-restart on changes)
-```bash
-npm run start:dev
-```
-
-The API will be available at `http://localhost:3000/api/v1`
-
-## 🌟 Quick Start
-
-After installation, to quickly start the development server:
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server (with auto-reload)
-npm run start:dev
-```
-
-The server will start at `http://localhost:3000` and automatically reload when you make changes to the code.
-
-✅ **Server Status**: Currently running successfully with SQLite database!
-
-## 🗄️ Database Configuration
-
-The application is currently configured to use **SQLite** for easy development setup (no external database required):
-
-- **Database Type**: SQLite
-- **Database File**: `data/doctor_appointment.db`
-- **Auto-created**: Tables are automatically created on first run
-
-### Switching to PostgreSQL (Production)
-
-To use PostgreSQL (recommended for production), update `src/database/database.module.ts`:
-
-```typescript
-// Change from:
-type: 'sqlite',
-database: 'data/doctor_appointment.db',
-
-// To:
-type: 'postgres',
-host: configService.get<string>('DATABASE_HOST'),
-port: configService.get<number>('DATABASE_PORT'),
-username: configService.get<string>('DATABASE_USERNAME'),
-password: configService.get<string>('DATABASE_PASSWORD'),
-database: configService.get<string>('DATABASE_NAME'),
-```
-
-## 📚 API Documentation
-
-Once the application is running, visit:
-- **Swagger UI**: http://localhost:3000/api/docs
+The application will be available at:
 - **API Base URL**: http://localhost:3000/api/v1
+- **Swagger Documentation**: http://localhost:3000/api/docs
 
-## 🔐 Authentication
+## 📖 API Documentation
 
-### Default Credentials
+### Authentication Endpoints
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|---------|
+| POST | `/api/v1/auth/register` | User registration | Public |
+| POST | `/api/v1/auth/login` | User login | Public |
 
-**Admin User:**
-- Email: `admin@hospital.com`
-- Password: `admin123`
+### User Management
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|---------|
+| GET | `/api/v1/users/profile` | Get user profile | Authenticated |
+| PATCH | `/api/v1/users/profile` | Update user profile | Authenticated |
+| GET | `/api/v1/users` | Get all users | Admin |
+| DELETE | `/api/v1/users/:id` | Delete user | Admin |
 
-**Patient User:**
-- Email: `john.doe@example.com`
-- Password: `patient123`
+### Doctor Management
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|---------|
+| POST | `/api/v1/doctors` | Create doctor | Admin |
+| GET | `/api/v1/doctors` | Get all doctors | Public |
+| GET | `/api/v1/doctors/:id` | Get doctor by ID | Public |
+| GET | `/api/v1/doctors/specializations` | Get specializations | Public |
+| GET | `/api/v1/doctors/:id/available-slots` | Get available slots | Authenticated |
 
-### API Authentication
+### Appointment Management
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|---------|
+| POST | `/api/v1/appointments` | Book appointment | Patient |
+| GET | `/api/v1/appointments/my` | Get my appointments | Authenticated |
+| GET | `/api/v1/appointments` | Get all appointments | Admin |
+| PATCH | `/api/v1/appointments/:id` | Update appointment | Admin/Owner |
+| POST | `/api/v1/appointments/:id/cancel` | Cancel appointment | Admin/Owner |
+| DELETE | `/api/v1/appointments/:id` | Delete appointment | Admin |
 
-1. **Register/Login** to get a JWT token
-2. **Include the token** in the Authorization header:
-   ```
-   Authorization: Bearer <your-jwt-token>
-   ```
+## 🔧 Development
 
-## 📖 API Endpoints
-
-### Authentication
-- `POST /api/v1/auth/register` - Register new user
-- `POST /api/v1/auth/login` - Login user
-
-### Doctors
-- `GET /api/v1/doctors` - List doctors (with pagination & filtering)
-- `GET /api/v1/doctors/:id` - Get doctor details
-- `GET /api/v1/doctors/:id/available-slots?date=YYYY-MM-DD` - Get available slots
-- `GET /api/v1/doctors/specializations` - Get all specializations
-- `POST /api/v1/doctors` - Create doctor (Admin only)
-
-### Appointments
-- `POST /api/v1/appointments` - Book appointment (Auth required)
-- `GET /api/v1/appointments/my` - Get user's appointments
-- `GET /api/v1/appointments/upcoming` - Get upcoming appointments
-- `PATCH /api/v1/appointments/:id` - Update appointment
-- `POST /api/v1/appointments/:id/cancel` - Cancel appointment
-- `GET /api/v1/appointments` - Get all appointments (Admin only)
-
-### Users
-- `GET /api/v1/users/profile` - Get current user profile
-- `PATCH /api/v1/users/profile` - Update profile
-- `GET /api/v1/users` - Get all users (Admin only)
-
-## 🏗️ Architecture
-
+### Project Structure
 ```
 src/
-├── auth/                 # Authentication module
-│   ├── dto/             # Data transfer objects
-│   ├── strategies/      # Passport strategies
-│   ├── auth.controller.ts
-│   ├── auth.service.ts
-│   └── auth.module.ts
-├── users/               # User management
-├── doctors/             # Doctor management
-├── appointments/        # Appointment management
-├── common/              # Shared utilities
-│   ├── decorators/      # Custom decorators
-│   ├── filters/         # Exception filters
-│   ├── guards/          # Route guards
-│   └── interceptors/    # Response interceptors
-├── database/            # Database configuration
-│   ├── migrations/      # Database migrations
-│   └── seeds/           # Seed data
-├── app.module.ts        # Root module
-└── main.ts             # Application entry point
+├── app.module.ts              # Main application module
+├── main.ts                    # Application entry point
+├── auth/                      # Authentication module
+│   ├── dto/                   # Data transfer objects
+│   ├── guards/                # Auth guards
+│   ├── strategies/            # Passport strategies
+│   └── auth.service.ts        # Auth business logic
+├── users/                     # User management module
+│   ├── dto/                   # User DTOs
+│   ├── entities/              # User entity
+│   └── users.service.ts       # User business logic
+├── doctors/                   # Doctor management module
+│   ├── dto/                   # Doctor DTOs
+│   ├── entities/              # Doctor entity
+│   └── doctors.service.ts     # Doctor business logic
+├── appointments/              # Appointment module
+│   ├── dto/                   # Appointment DTOs
+│   ├── entities/              # Appointment entity
+│   └── appointments.service.ts # Appointment logic
+├── database/                  # Database configuration
+│   └── database.module.ts     # TypeORM configuration
+└── common/                    # Shared utilities
+    ├── decorators/            # Custom decorators
+    ├── filters/               # Exception filters
+    ├── guards/                # Custom guards
+    └── interceptors/          # Response interceptors
 ```
 
-## 🔒 Security Features
+### Available Scripts
+```bash
+# Development
+npm run start:dev              # Start with hot reload
+npm run start:debug            # Start in debug mode
 
-- **Password Hashing**: bcryptjs with salt rounds
-- **JWT Authentication**: Secure token-based auth
-- **Rate Limiting**: Protection against brute force
-- **Input Validation**: Comprehensive data validation
-- **CORS**: Configurable cross-origin requests
-- **Helmet**: Security headers
-- **Role-based Access**: Admin/Patient permissions
+# Building
+npm run build                  # Build for production
+npm run start:prod            # Start production server
+
+# Code Quality
+npm run lint                   # Run ESLint
+npm run format                # Format code with Prettier
+
+# Testing
+npm run test                   # Run unit tests
+npm run test:watch            # Run tests in watch mode
+npm run test:cov              # Run tests with coverage
+npm run test:e2e              # Run end-to-end tests
+
+# Database
+npm run migration:generate     # Generate migration
+npm run migration:run          # Run migrations
+npm run migration:revert       # Revert migration
+npm run seed                   # Seed database
+```
+
+## 🧪 Testing
+
+### Running Tests
+```bash
+# Unit tests
+npm run test
+
+# Integration tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+### API Testing with cURL
+
+#### Register Admin User
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "phone": "1234567890",
+    "password": "admin123",
+    "role": "ADMIN"
+  }'
+```
+
+#### Create Doctor (Admin only)
+```bash
+curl -X POST http://localhost:3000/api/v1/doctors \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "name": "Dr. Smith",
+    "specialization": "Cardiology",
+    "email": "dr.smith@example.com",
+    "phone": "1234567890",
+    "experience": 10,
+    "licenseNumber": "MD123456",
+    "hospital": "City General",
+    "consultationFee": 150,
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "availableDays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  }'
+```
+
+#### Book Appointment
+```bash
+curl -X POST http://localhost:3000/api/v1/appointments \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "doctorId": "doctor-uuid",
+    "startTime": "2025-08-15T10:00:00Z",
+    "endTime": "2025-08-15T10:30:00Z",
+    "reason": "Regular checkup"
+  }'
+```
+
+## 🔒 Security
+
+This application implements several security best practices:
+
+- **JWT Authentication** with secure token handling
+- **Password Hashing** using bcryptjs with salt rounds
+- **Role-based Authorization** (Admin, Patient)
+- **Input Validation** and sanitization
+- **Rate Limiting** to prevent abuse
+- **CORS** configuration for cross-origin requests
+- **Security Headers** via Helmet middleware
+- **Environment Variables** for sensitive configuration
+
+## 🌐 Deployment
+
+### Production Environment Variables
+```env
+NODE_ENV=production
+DATABASE_TYPE=postgres
+DATABASE_HOST=your-db-host
+DATABASE_PORT=5432
+DATABASE_USERNAME=your-db-username
+DATABASE_PASSWORD=your-secure-password
+DATABASE_NAME=doctor_appointment
+JWT_SECRET=your-super-secure-jwt-secret
+PORT=3000
+```
+
+### Docker Deployment (Optional)
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
+```
 
 ## 📊 Database Schema
 
@@ -227,18 +323,78 @@ src/
 - `id` (UUID, Primary Key)
 - `name` (String)
 - `email` (String, Unique)
+- `phone` (String, Optional)
 - `password` (String, Hashed)
-- `role` (Enum: PATIENT, ADMIN)
-- `phone`, `dateOfBirth`, `address` (Optional)
+- `role` (Enum: ADMIN, PATIENT)
+- `dateOfBirth` (Date, Optional)
+- `address` (String, Optional)
+- `isActive` (Boolean)
+- `createdAt`, `updatedAt` (Timestamps)
 
 ### Doctors Table
 - `id` (UUID, Primary Key)
-- `name`, `specialization`, `email` (String)
+- `name` (String)
+- `specialization` (String)
+- `email` (String, Unique)
+- `phone` (String)
 - `experience` (Number)
-- `licenseNumber` (String, Unique)
-- `hospital`, `bio` (String)
+- `licenseNumber` (String)
+- `hospital` (String)
+- `bio` (Text, Optional)
+- `profileImage` (String, Optional)
 - `consultationFee` (Decimal)
 - `availableDays` (Array)
+- `startTime`, `endTime` (Time)
+- `appointmentDuration` (Number, default: 30)
+- `isActive` (Boolean)
+- `createdAt`, `updatedAt` (Timestamps)
+
+### Appointments Table
+- `id` (UUID, Primary Key)
+- `doctorId` (UUID, Foreign Key)
+- `patientId` (UUID, Foreign Key)
+- `startTime`, `endTime` (Timestamp)
+- `status` (Enum: SCHEDULED, CONFIRMED, CANCELLED, COMPLETED, NO_SHOW)
+- `reason` (String, Optional)
+- `notes` (Text, Optional)
+- `createdAt`, `updatedAt` (Timestamps)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**GitHub Copilot**
+- Repository: [@axle-blaze/Appointment-Booking-System](https://github.com/axle-blaze/Appointment-Booking-System)
+
+## 🆘 Support
+
+If you encounter any problems or have questions, please open an issue on the [GitHub repository](https://github.com/axle-blaze/Appointment-Booking-System/issues).
+
+## 🔮 Future Enhancements
+
+- [ ] Email notifications for appointments
+- [ ] SMS reminders
+- [ ] Payment integration
+- [ ] Real-time chat between doctors and patients
+- [ ] Mobile app development
+- [ ] Advanced reporting and analytics
+- [ ] Multi-language support
+- [ ] Calendar integration
+- [ ] Video consultation feature
+
+---
+
+**Happy Coding! 🎉**
 - `startTime`, `endTime` (Time)
 - `appointmentDuration` (Number)
 
@@ -302,26 +458,3 @@ npm run format            # Format code
 | `THROTTLE_TTL` | Rate limit window | `60` |
 | `THROTTLE_LIMIT` | Rate limit requests | `10` |
 | `CORS_ORIGIN` | Allowed origins | `http://localhost:3000` |
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
-
-- NestJS team for the amazing framework
-- TypeORM for excellent database integration
-- Swagger for API documentation
-
----
-
-**Happy Coding! 🩺**
-# Appointment-Booking-System
