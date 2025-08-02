@@ -1,12 +1,5 @@
 # Doctor Appointment Booking System
 
-A production-ready **Doctor Appointment Booking System** built with **NestJS**, **TypeScript**, and **PostgreSQL**. This system provides a comprehensive platform for managing doctor appointments with role-based authentication, RESTful APIs, and real-time appointment management.
-
-[![NestJS](https://img.shields.io/badge/NestJS-v10.0.0-red.svg)](https://nestjs.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-v5.1.3-blue.svg)](https://www.typescriptlang.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue.svg)](https://www.postgresql.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## 🚀 Features
 
 ### 👥 User Management
